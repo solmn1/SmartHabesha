@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.aait.sol.smarthabesha.speech_recognition.Recognizer;
+
 import ee.ioc.phon.android.speechutils.view.MicButton;
 
 /**
@@ -21,6 +23,7 @@ public class MainController extends Activity implements Recognizer.Listener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnStartStop = (MicButton) findViewById(R.id.btnStartStop);
+        btnStartStop.setState(MicButton.State.INIT);
         speechRecognizer  = new Recognizer(MainController.this);
         btnStartStop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,22 +54,23 @@ public class MainController extends Activity implements Recognizer.Listener{
 
     @Override
     public void onPartialResult(final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                EditText resultEdit = (EditText) findViewById(R.id.result);
-                resultEdit.setText(resultEdit.getText() + "\n" + "Partial: " + result);
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                EditText resultEdit = (EditText) findViewById(R.id.result);
+//                resultEdit.setText(resultEdit.getText() + "\n" + "Partial: " + result);
+//            }
+//        });
     }
 
     @Override
     public void onFinalResult(final String result) {
+        btnStartStop.setState(MicButton.State.INIT);
        runOnUiThread(new Runnable() {
            @Override
            public void run() {
                EditText resultEdit = (EditText) findViewById(R.id.result);
-               resultEdit.setText(resultEdit.getText() + "\n" + "Final: " + result);
+               resultEdit.setText(result);
            }
        });
     }

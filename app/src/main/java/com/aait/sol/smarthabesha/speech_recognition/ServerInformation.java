@@ -1,4 +1,4 @@
-package com.aait.sol.smarthabesha;
+package com.aait.sol.smarthabesha.speech_recognition;
 
 /**
  * Created by Sol on 5/7/2017.
