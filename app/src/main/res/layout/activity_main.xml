@@ -8,25 +8,75 @@
 
    <LinearLayout android:layout_height="wrap_content"
        android:layout_width="match_parent"
-       android:orientation="horizontal"
+       android:orientation="vertical"
        android:layout_marginTop="20dp">
-       <EditText android:layout_height="wrap_content"
-           android:layout_width="250dp"
-           android:layout_weight="0.33"
-           android:id="@+id/result"/>
+       <LinearLayout android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <EditText android:layout_height="wrap_content"
+               android:layout_width="250dp"
+               android:layout_weight="0.33"
+               android:id="@+id/result"/>
 
-       <ee.ioc.phon.android.speechutils.view.MicButton
-           android:id="@+id/btnStartStop"
-           android:layout_width="58dp"
-           android:layout_height="56dp"
-           android:background="@drawable/button_mic"
-           android:gravity="center"
-           android:src="@drawable/ic_voice_search_api_material" />
+           <ee.ioc.phon.android.speechutils.view.MicButton
+               android:id="@+id/btnStartStop"
+               android:layout_width="58dp"
+               android:layout_height="56dp"
+               android:background="@drawable/button_mic"
+               android:gravity="center"
+               android:src="@drawable/ic_voice_search_api_material" />
+       </LinearLayout>
+
 
    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/defaultLayout">
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ከታች የተዘረዘሩትን መጠየቅ ይችላሉ"
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="መልክት ላኪልኝ"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="ለ ሰለሞን ደዉይልኝ"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="ስንት ሰአት ነው"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="ኢሜል ላኪልኝ"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="ቀጠሮ ያዢልኝ"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="አ ዲስ ስልክ አስቀምጭልኝ"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/time">
+
+    </LinearLayout>
     <LinearLayout android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="400dp"
         android:orientation="vertical">
         <TextView android:layout_width="match_parent"
             android:layout_height="wrap_content"
