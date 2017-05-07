@@ -1,16 +1,16 @@
-package com.aait.sol.smarthabesha;
+package com.aait.sol.smarthabesha.test;
 
 import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.aait.sol.smarthabesha.R;
 
 import java.net.URI;
 
