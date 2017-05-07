@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Tessis\\SmartHabesha\\speechutil\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\error.wav",
+        "source": "D:\\Tessis\\SmartHabesha\\speechutil\\build\\intermediates\\bundles\\debug\\res\\raw\\error.wav"
+    },
+    {
+        "merged": "D:\\Tessis\\SmartHabesha\\speechutil\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\explore_begin.ogg",
+        "source": "D:\\Tessis\\SmartHabesha\\speechutil\\build\\intermediates\\bundles\\debug\\res\\raw\\explore_begin.ogg"
+    },
+    {
+        "merged": "D:\\Tessis\\SmartHabesha\\speechutil\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\explore_end.ogg",
+        "source": "D:\\Tessis\\SmartHabesha\\speechutil\\build\\intermediates\\bundles\\debug\\res\\raw\\explore_end.ogg"
+    }
+]

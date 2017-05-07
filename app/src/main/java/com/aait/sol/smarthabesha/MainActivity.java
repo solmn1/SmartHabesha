@@ -19,12 +19,11 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
+import ee.ioc.phon.android.speechutils.view.MicButton;
+
 public class MainActivity extends Activity{
-    private EditText serverAddr;
-    private Button connectBtn;
-    private Button btnStart;
-    private Button btnStop;
-    private TextView status;
+    private MicButton btnStartStop;
+    private MicButton.State micState;
     private URI uri;
     private WebSocketClient mWebSocketClient;
     private static final int RECORDER_SAMPLERATE = 16000;
@@ -39,12 +38,7 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        serverAddr = (EditText) findViewById(R.id.serverAddress);
-        connectBtn = (Button) findViewById(R.id.connectBtn);
-        status = (TextView) findViewById(R.id.status);
-        btnStart = (Button) findViewById(R.id.btnsatrt);
-        btnStop = (Button) findViewById(R.id.btnstop);
-        btnStop.setEnabled(false);
+        btnStartStop = (MicButton) findViewById(R.id.btnStartStop);
         mBufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, AudioFormat
                 .CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2;
 
@@ -53,39 +47,28 @@ public class MainActivity extends Activity{
                 RECORDER_CHANNELS,
                 RECORDER_AUDIO_ENCODING,
                 mBufferSize);
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        btnStartStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    connectWebSocket();
-                    startRecording();
-                }catch (Exception ex){ status.setText(status.getText() + "\n" +ex.getMessage().toString());}
 
-                btnStart.setEnabled(false);
-                btnStop.setEnabled(true);
+                try{
+                    if(mIsRecording){
+                        btnStartStop.setState(MicButton.State.TRANSCRIBING);
+                        stopRecording();
+                        mWebSocketClient.send("EOS");
+                    }
+                    else{
+                        connectWebSocket();
+                        startRecording();
+                        btnStartStop.setState(MicButton.State.LISTENING);
+                    }
+
+                }catch (Exception ex){}
+
             }
         });
 
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    stopRecording();
-                }catch (Exception ex){
 
-                    status.setText(status.getText() + "\n" +"stoping:" +ex.getMessage());
-                }
-
-                btnStart.setEnabled(true);
-                btnStop.setEnabled(false);
-                try{
-                    mWebSocketClient.send("EOS");
-                }catch (Exception ex){
-                    status.setText(status.getText() + "\n sending:Eos:" + ex.getMessage());
-                }
-
-            }
-        });
 
     }
     private void startRecording() {
@@ -117,14 +100,9 @@ public class MainActivity extends Activity{
     }
     public void connectWebSocket(){
         try{
-            if(serverAddr.getText().toString().equals("")){
-                uri = new URI("ws://192.168.43.12:8080/client/ws/speech" + "?content-type=audio/x-raw,+layout=(string)interleaved,+rate=(int)16000,+format=(string)S16LE,+channels=(int)1"); }
-            else{
-                uri = new URI(serverAddr.getText().toString());
-            }
-
+            uri = new URI("ws://192.168.43.12:8080/client/ws/speech" + "?content-type=audio/x-raw,+layout=(string)interleaved,+rate=(int)16000,+format=(string)S16LE,+channels=(int)1");
         }catch (Exception ex){
-            status.setText(status.getText() + "\n" + ex.getMessage());
+
         }
         mWebSocketClient = new WebSocketClient(uri) {
             @Override
@@ -132,8 +110,8 @@ public class MainActivity extends Activity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView status = (TextView) findViewById(R.id.status);
-                        status.setText("Connection Opened");
+                       // TextView status = (TextView) findViewById(R.id.status);
+                       // status.setText("Connection Opened");
                     }
                 });
 
@@ -147,17 +125,21 @@ public class MainActivity extends Activity{
                     public void run() {
                         try{
                             Toast.makeText(MainActivity.this,"Message recived", Toast.LENGTH_LONG).show();
-                            EditText result = (EditText) findViewById(R.id.serverAddress);
+                            EditText result = (EditText) findViewById(R.id.result);
                             JSONObject jObj = new JSONObject(message);
                             int _status = jObj.getInt("status");
                             String _transcript = jObj.getJSONObject("result").getJSONArray("hypotheses").getJSONObject(0).getString("transcript");
                             boolean _isFinal = jObj.getJSONObject("result").getBoolean("final");
                             result.setText( _transcript);
+                            if(_isFinal){
+                                btnStartStop.setState(MicButton.State.RECORDING);
+                            }
                         }catch (Exception ex){}
 
                     }
                 });
             }
+
 
 
             @Override
@@ -186,7 +168,7 @@ public class MainActivity extends Activity{
         try{
             mWebSocketClient.connect();
         }catch (Exception ex){
-            status.setText(status.getText() + "\n connecting:" + ex.getMessage());
+            //status.setText(status.getText() + "\n connecting:" + ex.getMessage());
         }
 
     }
