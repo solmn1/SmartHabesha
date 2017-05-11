@@ -54,23 +54,23 @@ public class MainController extends Activity implements Recognizer.Listener{
 
     @Override
     public void onPartialResult(final String result) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                EditText resultEdit = (EditText) findViewById(R.id.result);
-//                resultEdit.setText(resultEdit.getText() + "\n" + "Partial: " + result);
-//            }
-//        });
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                EditText resultEdit = (EditText) findViewById(R.id.result);
+                resultEdit.setText(result);
+            }
+        });
     }
 
     @Override
-    public void onFinalResult(final String result) {
+    public void onFinalResult(final String rst) {
         btnStartStop.setState(MicButton.State.INIT);
        runOnUiThread(new Runnable() {
            @Override
            public void run() {
                EditText resultEdit = (EditText) findViewById(R.id.result);
-               resultEdit.setText(result);
+               resultEdit.setText(rst);
            }
        });
     }
