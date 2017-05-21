@@ -259,27 +259,41 @@ public class MainController extends Activity implements Recognizer.Listener{
                     */
                        else {
                            reportError(query.getErrorType());
-                           currentInputType = Input.InputType.SECOND;
+                           if(currentInputType == Input.InputType.FIRST)
+                                currentInputType = Input.InputType.SECOND;
                        }
 
 
                    }
                    else if(currentActionType == Actions.ActionType.MESSAGE){
-                       
-                       if(currentInputType == Input.InputType.FIRST){
-                           appQuery = new Query();
-                           currentInputType = Input.InputType.SECOND;
+
+                       if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
+
+                           if(currentInputType == Input.InputType.FIRST){
+
+                               appQuery = new Query();
+                               currentInputType = Input.InputType.SECOND;
+                           }
+                           else if(currentInputType == Input.InputType.SECOND){
+
+                               appQuery.setNumber(query.getNumber());
+                               currentInputType = Input.InputType.THIRD;
+                           }
+                           else if(currentInputType == Input.InputType.THIRD){
+
+                               appQuery.setContent(query.getContent());
+                               controller.sendMessage(appQuery);
+                               currentActionType = Actions.ActionType.DEFAULT;
+                               currentInputType = Input.InputType.FIRST;
+                           }
                        }
-                       else if(currentInputType == Input.InputType.SECOND){
-                           appQuery.setNumber(query.getNumber());
-                           currentInputType = Input.InputType.THIRD;
+                       else {
+                           reportError(query.getErrorType());
+                           if(currentInputType == Input.InputType.FIRST)
+                               currentInputType = Input.InputType.SECOND;
+
                        }
-                       else if(currentInputType == Input.InputType.THIRD){
-                           appQuery.setContent(query.getContent());
-                           controller.sendMessage(appQuery);
-                           currentActionType = Actions.ActionType.DEFAULT;
-                           currentInputType = Input.InputType.FIRST;
-                       }
+
                    }
                    else if(currentActionType == Actions.ActionType.EMAIL){
 
