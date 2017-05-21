@@ -191,6 +191,7 @@ public class MainController extends Activity implements Recognizer.Listener{
 
     public void handleTranscription(String result){
                 Query query  = nlp.getQuery(result, currentActionType, currentInputType);
+               if(query.getErrorType() != Errors.ErrorType.UNKNOWN_COMMAND){}
                 if(currentActionType != query.getActionType()){
                     prepareGUI(query.getActionType());
                     currentActionType = query.getActionType();
