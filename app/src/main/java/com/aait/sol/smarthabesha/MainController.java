@@ -191,110 +191,116 @@ public class MainController extends Activity implements Recognizer.Listener{
 
     public void handleTranscription(String result){
                 Query query  = nlp.getQuery(result, currentActionType, currentInputType);
-               if(query.getErrorType() != Errors.ErrorType.UNKNOWN_COMMAND){}
-                if(currentActionType != query.getActionType()){
-                    prepareGUI(query.getActionType());
-                    currentActionType = query.getActionType();
-                }
-                if(currentActionType == Actions.ActionType.TIME){
+               if(query.getErrorType() != Errors.ErrorType.UNKNOWN_COMMAND){
+                   if(currentActionType != query.getActionType()){
+                       prepareGUI(query.getActionType());
+                       currentActionType = query.getActionType();
+                   }
+                   if(currentActionType == Actions.ActionType.TIME){
 
-                    TextView time = (TextView) findViewById(R.id.timeView);
-                    time.setText(time.getText()+ controller.getCurrentTime());
-                    currentActionType = Actions.ActionType.DEFAULT;
-                    currentInputType = Input.InputType.FIRST;
-                }
-                else if(currentActionType == Actions.ActionType.CALL){
-
-                    /*
-                    * the transcription is valid and all required info is set
-                    */
-                    if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
+                       TextView time = (TextView) findViewById(R.id.timeView);
+                       time.setText(time.getText()+ controller.getCurrentTime());
+                       currentActionType = Actions.ActionType.DEFAULT;
+                       currentInputType = Input.InputType.FIRST;
+                   }
+                   else if(currentActionType == Actions.ActionType.CALL){
 
                         /*
-                        * Contact name is set
+                        * the transcription is valid and all required info is set
                         */
-                        if(query.getContactName() != null){
-                            String number = controller.getContactNumber(query.getContactName());
+                       if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
 
                             /*
-                            * the contact is exist
+                            * Contact name is set
                             */
-                            if(number != null){
-                                appQuery = new Query();
-                                appQuery.setNumber(number);
-                                TextView view = (TextView) findViewById(R.id.shortCallNumber);
-                                view.setText(controller.getCorrectName(query.getContactName()) + ": " + number);
-                                controller.call(appQuery);
-                                currentActionType = Actions.ActionType.DEFAULT;
-                                currentInputType = Input.InputType.FIRST;
-                                return;
-                            }
-                            else {
-                                reportError(Errors.ErrorType.CONTACT_NOT_FOUND);
-                            }
-                        }
+                           if(query.getContactName() != null){
+                               String number = controller.getContactNumber(query.getContactName());
 
-                        /*
-                        * the phone number is set
-                        */
-                        else if(query.getNumber() != null){
-                            appQuery = new Query();
-                            appQuery.setNumber(query.getNumber());
-                            TextView view = (TextView) findViewById(R.id.shortCallNumber);
-                            view.setText("new contact :" + query.getNumber());
-                            controller.call(appQuery);
-                            currentActionType = Actions.ActionType.DEFAULT;
-                            currentInputType = Input.InputType.FIRST;
-                            return;
-                        }
-                        else {
-                            currentInputType = Input.InputType.SECOND;
-                        }
+                                /*
+                                * the contact is exist
+                                */
+                               if(number != null){
+                                   appQuery = new Query();
+                                   appQuery.setNumber(number);
+                                   TextView view = (TextView) findViewById(R.id.shortCallNumber);
+                                   view.setText(controller.getCorrectName(query.getContactName()) + ": " + number);
+                                   controller.call(appQuery);
+                                   currentActionType = Actions.ActionType.DEFAULT;
+                                   currentInputType = Input.InputType.FIRST;
+                                   return;
+                               }
+                               else {
+                                   reportError(Errors.ErrorType.CONTACT_NOT_FOUND);
+                               }
+                           }
 
-                    }
+                            /*
+                            * the phone number is set
+                            */
+                           else if(query.getNumber() != null){
+                               appQuery = new Query();
+                               appQuery.setNumber(query.getNumber());
+                               TextView view = (TextView) findViewById(R.id.shortCallNumber);
+                               view.setText("new contact :" + query.getNumber());
+                               controller.call(appQuery);
+                               currentActionType = Actions.ActionType.DEFAULT;
+                               currentInputType = Input.InputType.FIRST;
+                               return;
+                           }
+                           else {
+                               currentInputType = Input.InputType.SECOND;
+                           }
+
+                       }
 
                     /*
-                    * the trasnall information is not set. show to the user that  need more info
+                    * all information is not set. show to the user that  need more info
                     * and ask to re inter the info.
                     */
-                    else {
-                        reportError(query.getErrorType());
-                        currentInputType = Input.InputType.SECOND;
-                    }
+                       else {
+                           reportError(query.getErrorType());
+                           currentInputType = Input.InputType.SECOND;
+                       }
 
 
-                }
-                else if(currentActionType == Actions.ActionType.MESSAGE){
-                     if(currentInputType == Input.InputType.FIRST){
-                         appQuery = new Query();
-                         currentInputType = Input.InputType.SECOND;
-                     }
-                     else if(currentInputType == Input.InputType.SECOND){
-                         appQuery.setNumber(query.getNumber());
-                         currentInputType = Input.InputType.THIRD;
-                     }
-                     else if(currentInputType == Input.InputType.THIRD){
-                         appQuery.setContent(query.getContent());
-                         controller.sendMessage(appQuery);
-                         currentActionType = Actions.ActionType.DEFAULT;
-                         currentInputType = Input.InputType.FIRST;
-                     }
-                }
-                else if(currentActionType == Actions.ActionType.EMAIL){
+                   }
+                   else if(currentActionType == Actions.ActionType.MESSAGE){
+                       
+                       if(currentInputType == Input.InputType.FIRST){
+                           appQuery = new Query();
+                           currentInputType = Input.InputType.SECOND;
+                       }
+                       else if(currentInputType == Input.InputType.SECOND){
+                           appQuery.setNumber(query.getNumber());
+                           currentInputType = Input.InputType.THIRD;
+                       }
+                       else if(currentInputType == Input.InputType.THIRD){
+                           appQuery.setContent(query.getContent());
+                           controller.sendMessage(appQuery);
+                           currentActionType = Actions.ActionType.DEFAULT;
+                           currentInputType = Input.InputType.FIRST;
+                       }
+                   }
+                   else if(currentActionType == Actions.ActionType.EMAIL){
 
-                }
-                else if(currentActionType == Actions.ActionType.ALARM){
+                   }
+                   else if(currentActionType == Actions.ActionType.ALARM){
 
-                }
-                else if(currentActionType == Actions.ActionType.REMINDER){
+                   }
+                   else if(currentActionType == Actions.ActionType.REMINDER){
 
-                }
-                else if(currentActionType == Actions.ActionType.NEW_CONTACT){
+                   }
+                   else if(currentActionType == Actions.ActionType.NEW_CONTACT){
 
-                }
-                else{
+                   }
+                   else{
 
-                }
+                   }
+               }
+               else{
+                   reportError(query.getErrorType());
+               }
+
 
 
 
@@ -353,31 +359,6 @@ public class MainController extends Activity implements Recognizer.Listener{
 
     }
 
-    public void handleCall(Query query){
-        if(query.getContactName() != null){
-            String number = controller.getContactNumber(query.getContactName());
-            if(number != null){
-                appQuery = new Query();
-                appQuery.setNumber(number);
-                TextView view = (TextView) findViewById(R.id.shortCallNumber);
-                view.setText(controller.getCorrectName(query.getContactName()) + ": " + number);
-                controller.call(appQuery);
-                return;
-            }
-            else {
-                reportError(Errors.ErrorType.CONTACT_NOT_FOUND);
-            }
-        }
-        else if(query.getNumber() != null){
-            appQuery = new Query();
-            appQuery.setNumber(query.getNumber());
-            TextView view = (TextView) findViewById(R.id.shortCallNumber);
-            view.setText("new contact :" + query.getNumber());
-            controller.call(appQuery);
-            return;
 
-        }
-
-    }
 
 }
