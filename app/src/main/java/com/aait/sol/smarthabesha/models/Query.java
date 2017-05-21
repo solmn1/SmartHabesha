@@ -5,13 +5,22 @@ package com.aait.sol.smarthabesha.models;
  */
 
 public class Query {
-    private Actions.ActionType actionType;
+
+    /*
+    * Action type of the transcription txt
+    */
+    private Actions.ActionType actionType = Actions.ActionType.DEFAULT;
     private String content = null;
-    private String contact = null;
+    private String contactName = null;
     private String time = null;
     private String email = null;
     private String title = null;
     private String number = null;
+
+    /*
+    * Errors that will  found while processing the transcription
+    */
+    private Errors.ErrorType errorType = Errors.ErrorType.NO_ERROR;
 
     public Query(Actions.ActionType actionType){
         this.actionType = actionType;
@@ -42,12 +51,12 @@ public class Query {
         this.content = content;
     }
 
-    public String getContact() {
-        return contact;
+    public String getContactName() {
+        return contactName;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setContactName(String contact) {
+        this.contactName = contact;
     }
 
     public String getTime() {
@@ -72,5 +81,13 @@ public class Query {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Errors.ErrorType getErrorType() {
+        return errorType;
+    }
+
+    public void setErrorType(Errors.ErrorType errorType) {
+        this.errorType = errorType;
     }
 }

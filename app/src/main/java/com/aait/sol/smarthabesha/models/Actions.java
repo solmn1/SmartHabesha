@@ -12,6 +12,7 @@ public class Actions {
         ALARM,
         EMAIL,
         NEW_CONTACT,
-        REMINDER
+        REMINDER,
+        DEFAULT
     }
 }

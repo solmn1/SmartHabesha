@@ -4,15 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.aait.sol.smarthabesha.test.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-   <LinearLayout android:layout_height="wrap_content"
-       android:layout_width="match_parent"
+   <LinearLayout android:layout_height="80dp"
+       android:layout_width="340dp"
        android:orientation="vertical"
-       android:layout_marginTop="20dp">
+       android:layout_marginTop="20dp"
+       android:layout_marginLeft="10dp"
+       android:background="@drawable/border">
+
        <LinearLayout android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="horizontal">
+           <ImageView android:layout_height="50dp"
+               android:layout_width="30dp"
+               android:src="@drawable/icon" />
            <EditText android:layout_height="wrap_content"
                android:layout_width="250dp"
                android:layout_weight="0.33"
@@ -29,51 +36,74 @@
 
 
    </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/defaultLayout"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/border"
         android:orientation="vertical"
-        android:id="@+id/defaultLayout">
-        <TextView android:layout_width="match_parent"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ከታች የተዘረዘሩትን መጠየቅ ይችላሉ"
+            android:textAlignment="center"
             android:textSize="18dp"
-            android:textAlignment="center"
-            android:textStyle="bold"/>
-        <TextView android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:text="መልክት ላኪልኝ"/>
-        <TextView android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="መልክት ላኪልኝ"
+            android:textAlignment="center" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:text="ለ ሰለሞን ደዉይልኝ"/>
-        <TextView android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ለ ሰለሞን ደዉይልኝ"
+            android:textAlignment="center" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:text="ስንት ሰአት ነው"/>
-        <TextView android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ስንት ሰአት ነው"
+            android:textAlignment="center" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:text="ኢሜል ላኪልኝ"/>
-        <TextView android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ኢሜል ላኪልኝ"
+            android:textAlignment="center" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:text="ቀጠሮ ያዢልኝ"/>
-        <TextView android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ቀጠሮ ያዢልኝ"
+            android:textAlignment="center" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:text="አ ዲስ ስልክ አስቀምጭልኝ"/>
+            android:layout_height="wrap_content"
+            android:text="አ ዲስ ስልክ አስቀምጭልኝ"
+            android:textAlignment="center" />
 
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="80dp"
+
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/time"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
+        >
         <TextView  android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:textAlignment="center"
@@ -83,12 +113,16 @@
         <TextView android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:textAlignment="center"
-            android:text="4:50"/>
+            android:text=""
+            android:id="@+id/timeView"
+            />
 
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/call"
@@ -100,12 +134,43 @@
             android:textSize="18dp"
             android:textStyle="bold"
             android:text="መደወል "/>
+        <LinearLayout android:layout_height="wrap_content"
+            android:id="@+id/longCall"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+            <TextView  android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+
+                android:textSize="18dp"
+                android:text="ለማን ነው？"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/longCallNumber"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="18dp"
+                android:layout_weight="100.54"
+                />
+            <LinearLayout android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/shortCall"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/shortCallNumber"/>
+            </LinearLayout>
+        </LinearLayout>
+
 
 
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/message"
@@ -120,7 +185,77 @@
 
 
     </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/alarm"
+        android:visibility="gone"
+        >
+        <TextView  android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="ቀጠሮ"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/reminder"
+        android:visibility="gone"
+        >
+        <TextView  android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="ማሰታዎሻ"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/newNumber"
+        android:visibility="gone"
+        >
+        <TextView  android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="አዲስ ቁጥር"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="340dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/email"
+        android:visibility="gone"
+        >
+        <TextView  android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="ኢሜል"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
         <TextView android:layout_width="match_parent"
@@ -130,4 +265,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/conn"/>
     </LinearLayout>
+    <Button android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Switch"
+        android:id="@+id/switchBtn"
+        android:layout_marginTop="140dp"
+        android:visibility="gone"
+        />
 </LinearLayout>
