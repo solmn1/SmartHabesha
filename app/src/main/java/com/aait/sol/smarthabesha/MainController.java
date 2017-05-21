@@ -272,7 +272,45 @@ public class MainController extends Activity implements Recognizer.Listener{
                            if(currentInputType == Input.InputType.FIRST){
 
                                appQuery = new Query();
-                               currentInputType = Input.InputType.SECOND;
+
+                               /*
+                                * Contact name is set
+                                */
+                               if(query.getContactName() != null){
+                                   String number = controller.getContactNumber(query.getContactName());
+
+                                    /*
+                                    * the contact is exist
+                                    */
+                                   if(number != null){
+                                       appQuery.setNumber(number);
+                                       controller.call(appQuery);
+                                       currentActionType = Actions.ActionType.DEFAULT;
+                                       currentInputType = Input.InputType.FIRST;
+                                       return;
+                                   }
+                                   else {
+                                       reportError(Errors.ErrorType.CONTACT_NOT_FOUND);
+                                       currentInputType = Input.InputType.SECOND;
+                                   }
+                               }
+
+                                /*
+                                * the phone number is set
+                                */
+                               else if(query.getNumber() != null){
+                                   appQuery = new Query();
+                                   appQuery.setNumber(query.getNumber());
+                                   TextView view = (TextView) findViewById(R.id.shortCallNumber);
+                                   view.setText("new contact :" + query.getNumber());
+                                   controller.call(appQuery);
+                                   currentActionType = Actions.ActionType.DEFAULT;
+                                   currentInputType = Input.InputType.FIRST;
+                                   return;
+                               }
+                               else {
+                                   currentInputType = Input.InputType.SECOND;
+                               }
                            }
                            else if(currentInputType == Input.InputType.SECOND){
 
@@ -296,16 +334,127 @@ public class MainController extends Activity implements Recognizer.Listener{
 
                    }
                    else if(currentActionType == Actions.ActionType.EMAIL){
+                       if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
+
+                           if(currentInputType == Input.InputType.FIRST){
+
+                               appQuery = new Query();
+                               currentInputType = Input.InputType.SECOND;
+                           }
+                           else if(currentInputType == Input.InputType.SECOND){
+
+                               appQuery.setEmail(query.getEmail());
+                               currentInputType = Input.InputType.THIRD;
+                           }
+                           else if(currentInputType == Input.InputType.THIRD){
+
+                               appQuery.setContent(query.getContent());
+                               controller.sendEmail(appQuery);
+                               currentActionType = Actions.ActionType.DEFAULT;
+                               currentInputType = Input.InputType.FIRST;
+                           }
+                       }
+                       else {
+                           reportError(query.getErrorType());
+                           if(currentInputType == Input.InputType.FIRST)
+                               currentInputType = Input.InputType.SECOND;
+
+                       }
 
                    }
                    else if(currentActionType == Actions.ActionType.ALARM){
+                       if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
 
+                           if(currentInputType == Input.InputType.FIRST){
+
+                               appQuery = new Query();
+                               if(query.getTime() != null){
+                                   appQuery.setTime(query.getTime());
+                                   controller.setAlarm(appQuery);
+                                   currentInputType = Input.InputType.FIRST;
+                                   currentActionType = Actions.ActionType.DEFAULT;
+                                   return;
+                               }
+                               currentInputType = Input.InputType.SECOND;
+                           }
+                           else if(currentInputType == Input.InputType.SECOND){
+
+                               appQuery.setTime(query.getTime());
+
+                               currentInputType = Input.InputType.FIRST;
+                               currentActionType = Actions.ActionType.DEFAULT;
+                           }
+
+                       }
+                       else {
+                           reportError(query.getErrorType());
+                           if(currentInputType == Input.InputType.FIRST)
+                               currentInputType = Input.InputType.SECOND;
+
+                       }
                    }
                    else if(currentActionType == Actions.ActionType.REMINDER){
+                       if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
 
+                           if(currentInputType == Input.InputType.FIRST){
+
+                               appQuery = new Query();
+                               currentInputType = Input.InputType.SECOND;
+                           }
+                           else if(currentInputType == Input.InputType.SECOND){
+
+                               appQuery.setTitle(query.getTitle());
+                               currentInputType = Input.InputType.THIRD;
+                           }
+                           else if(currentInputType == Input.InputType.THIRD){
+
+                               appQuery.setTime(query.getTime());
+                               currentInputType = Input.InputType.FOURTH;
+                           }
+                           else if(currentInputType == Input.InputType.FOURTH){
+                               appQuery.setDescription(query.getDescription());
+                               controller.setReminder(appQuery);
+                               currentActionType = Actions.ActionType.DEFAULT;
+                               currentInputType = Input.InputType.FIRST;
+                           }
+                       }
+                       else {
+                           reportError(query.getErrorType());
+                           if(currentInputType == Input.InputType.FIRST)
+                               currentInputType = Input.InputType.SECOND;
+
+                       }
                    }
                    else if(currentActionType == Actions.ActionType.NEW_CONTACT){
+                       if(query.getErrorType() == Errors.ErrorType.NO_ERROR){
 
+                           if(currentInputType == Input.InputType.FIRST){
+
+                               appQuery = new Query();
+                               if(query.getNumber() != null){
+                                   appQuery.setNumber(query.getNumber());
+                                   controller.saveNewContact(appQuery);
+                                   currentInputType = Input.InputType.FIRST;
+                                   currentActionType = Actions.ActionType.DEFAULT;
+                                   return;
+                               }
+                               currentInputType = Input.InputType.SECOND;
+                           }
+                           else if(currentInputType == Input.InputType.SECOND){
+
+                               appQuery.setNumber(query.getNumber());
+
+                               currentInputType = Input.InputType.FIRST;
+                               currentActionType = Actions.ActionType.DEFAULT;
+                           }
+
+                       }
+                       else {
+                           reportError(query.getErrorType());
+                           if(currentInputType == Input.InputType.FIRST)
+                               currentInputType = Input.InputType.SECOND;
+
+                       }
                    }
                    else{
 

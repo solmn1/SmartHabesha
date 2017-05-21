@@ -22,6 +22,8 @@ public class Input {
         * the third input for specific functionality
         * if it requires.
         */
-        THIRD
+        THIRD,
+
+        FOURTH
     }
 }

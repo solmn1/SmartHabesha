@@ -16,6 +16,7 @@ public class Query {
     private String email = null;
     private String title = null;
     private String number = null;
+    private String description = null;
 
     /*
     * Errors that will  found while processing the transcription
@@ -89,5 +90,13 @@ public class Query {
 
     public void setErrorType(Errors.ErrorType errorType) {
         this.errorType = errorType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
